@@ -1,106 +1,256 @@
-# Web Vanguard Kids
+# 🌟 Vanguard Kids - Website
 
-A beautiful, modern website for Vanguard Kids Preschool and Academy - an early childhood education center in the United States.
+Sitio web oficial de Vanguard Kids Preschool & Academy. Desarrollado con Next.js 14, TypeScript y Tailwind CSS.
 
-## Features
+## 📋 Características
 
-- 🎨 Beautiful, modern design with pastel colors
-- 📱 Fully responsive (mobile, tablet, desktop)
-- ⚡ Built with Next.js 14 and TypeScript
-- 🎯 SEO optimized
-- ♿ Accessible design
-- 🌈 Smooth animations and transitions
+- ✅ Diseño moderno y responsive
+- ✅ Sistema de formularios (Contact, Apply, Chat)
+- ✅ Envío de correos electrónicos con Nodemailer
+- ✅ Widget de chat flotante
+- ✅ Almacenamiento de datos en JSON
+- ✅ Almacenamiento de currículums (PDFs)
+- ✅ Sistema de reportes
+- ✅ Notificaciones toast (react-hot-toast)
 
-## Pages
+## 🚀 Tecnologías
 
-- **Home** - Welcome page with hero section, values, programs, and call-to-action
-- **About Us** - Information about Vanguard Kids, mission, vision, and both locations
-- **Work with Us** - Career opportunities and application process
-- **Teacher Training** - Professional development programs
-- **Forms** - Downloadable forms and documents
-- **Contact** - Contact form and location information
+- **Next.js 14** - Framework React
+- **TypeScript** - Tipado estático
+- **Tailwind CSS** - Estilos
+- **React Icons** - Iconos
+- **Nodemailer** - Envío de correos
+- **Zod** - Validación de datos
+- **react-hot-toast** - Notificaciones
 
-## Getting Started
+## 📁 Estructura del Proyecto
 
-### Prerequisites
+```
+web-vanguardkids/
+├── app/                    # App Router de Next.js
+│   ├── api/               # API routes
+│   │   ├── contact/       # Formulario de contacto
+│   │   ├── apply/         # Formulario de aplicación
+│   │   ├── chat/          # Mensajes del chat
+│   │   └── reports/      # Reportes de datos
+│   ├── aboutus/           # Página About Us
+│   ├── apply/             # Página de aplicación
+│   ├── contact/           # Página de contacto
+│   ├── forms/             # Página de formularios
+│   ├── teacher-training/  # Página de entrenamiento
+│   ├── work-with-us/      # Página de trabajo
+│   └── page.tsx           # Página principal
+├── components/            # Componentes React
+│   ├── Button.tsx
+│   ├── Card.tsx
+│   ├── ChatWidget.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   └── Section.tsx
+├── lib/                   # Utilidades
+│   ├── email.ts           # Configuración de correos
+│   ├── email-templates.ts # Plantillas de correo
+│   └── storage.ts         # Almacenamiento de datos
+├── public/               # Archivos estáticos
+│   ├── logo.png
+│   ├── favicon.png
+│   └── img*.jpg
+├── data/                 # Datos de formularios (generado)
+├── uploads/              # Archivos subidos (generado)
+└── formularios.json      # Configuración de formularios
+```
 
-- Node.js 18+ installed
-- npm or yarn package manager
+## 🔧 Instalación
 
-### Installation
+### Requisitos
 
-1. Install dependencies:
+- Node.js 18+
+- npm o yarn
+
+### Pasos
+
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/LiamFranKi/vanguardkids-web.git
+cd vanguardkids-web
+```
+
+2. **Instalar dependencias**
 ```bash
 npm install
 ```
 
-2. Run the development server:
+3. **Configurar variables de entorno**
+
+Crear archivo `.env.local` en la raíz del proyecto:
+
+```env
+# Configuración SMTP para envío de emails
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu-email@gmail.com
+SMTP_PASS=tu-contraseña-de-aplicacion
+SMTP_FROM=tu-email@gmail.com
+
+# Email de contacto por defecto
+CONTACT_EMAIL=admin@vanguardkids.com
+
+# URL del sitio
+NEXT_PUBLIC_SITE_URL=https://www.vanguardkids.com
+```
+
+4. **Configurar formularios**
+
+Editar `formularios.json` con los destinatarios de correo:
+
+```json
+{
+  "contact": {
+    "to": ["email1@example.com", "email2@example.com"],
+    "subject": "📧 New Contact Form Submission",
+    "replyTo": true
+  },
+  "apply": {
+    "to": ["email@example.com"],
+    "subject": "💼 New Job Application",
+    "replyTo": true
+  },
+  "chat": {
+    "to": ["email@example.com"],
+    "subject": "💬 New Chat Message",
+    "replyTo": true
+  }
+}
+```
+
+5. **Ejecutar en desarrollo**
 ```bash
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-### Build for Production
-
+6. **Construir para producción**
 ```bash
 npm run build
 npm start
 ```
 
-## Technologies Used
+## 📧 Sistema de Correos
 
-- **Next.js 14** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **React Icons** - Icon library
-- **Framer Motion** - Animations (optional)
+El sistema envía correos automáticamente cuando se envían formularios:
 
-## Project Structure
+- **Correo al administrador**: Con todos los datos del formulario
+- **Correo de agradecimiento**: Al usuario que envió el formulario
+
+Los correos incluyen:
+- Logo de Vanguard Kids
+- Diseño profesional con gradientes
+- Botones de acción rápida (Email y WhatsApp para chat)
+- Información completa del formulario
+
+## 💾 Almacenamiento de Datos
+
+### Formularios
+
+Todos los formularios se guardan en archivos JSON organizados por fecha:
 
 ```
-web-vanguardkids/
-├── app/                    # Next.js app directory
-│   ├── aboutus/           # About Us page
-│   ├── work-with-us/      # Work with Us page
-│   ├── teacher-training/  # Teacher Training page
-│   ├── forms/             # Forms page
-│   ├── contact/           # Contact page
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── Header.tsx         # Navigation header
-│   ├── Footer.tsx         # Footer component
-│   ├── Button.tsx         # Button component
-│   ├── Card.tsx           # Card component
-│   └── Section.tsx        # Section wrapper
-├── public/                # Static assets
-└── package.json           # Dependencies
+data/
+├── contact/
+│   └── 2025-01/
+│       └── 2025-01-15.json
+├── apply/
+│   └── 2025-01/
+│       └── 2025-01-15.json
+└── chat/
+    └── 2025-01/
+        └── 2025-01-15.json
 ```
 
-## Color Palette
+### Currículums
 
-The website uses a beautiful pastel color scheme:
-- **Pastel Pink** - Primary accent
-- **Pastel Purple** - Secondary accent
-- **Pastel Blue** - Tertiary accent
-- **Pastel Green** - Success/positive elements
-- **Pastel Yellow** - Highlights
-- **Pastel Peach** - Warm accents
+Los PDFs de currículums se guardan en:
 
-## Deployment
+```
+uploads/
+└── resumes/
+    └── [timestamp]_[filename].pdf
+```
 
-This project is designed to be deployed on a VPS with:
-- Node.js runtime
-- PM2 process manager
-- Nginx reverse proxy
-- SSL certificates (Let's Encrypt)
+## 📊 Reportes
 
-See `CONTEXTO_NUEVA_WEB.md` for detailed deployment instructions.
+Acceder a los reportes mediante la API:
 
-## License
+- `GET /api/reports` - Todos los datos
+- `GET /api/reports?type=contact` - Solo contactos
+- `GET /api/reports?type=apply` - Solo aplicaciones
+- `GET /api/reports?type=chat` - Solo chats
+- `GET /api/reports?stats=true` - Estadísticas
+- `GET /api/reports?export=csv` - Exportar a CSV
 
-© 2024 Vanguard Kids. All rights reserved.
+## 🌐 Despliegue en VPS (Hostinger)
 
+Ver el archivo `CONTEXTO_NUEVA_WEB.md` para instrucciones completas de despliegue.
 
+### Resumen rápido:
+
+1. **Conectarse al VPS**
+```bash
+ssh root@72.60.172.101
+```
+
+2. **Clonar el repositorio**
+```bash
+cd /var/www
+git clone https://github.com/LiamFranKi/vanguardkids-web.git vanguardkids-web
+cd vanguardkids-web
+```
+
+3. **Instalar dependencias y construir**
+```bash
+npm install
+npm run build
+```
+
+4. **Configurar .env.local** (crear en el servidor)
+
+5. **Iniciar con PM2**
+```bash
+pm2 start npm --name "vanguardkids-web" -- start -- --port 3001
+pm2 save
+```
+
+6. **Configurar Nginx** (ver CONTEXTO_NUEVA_WEB.md)
+
+7. **Configurar SSL con Certbot**
+
+## 📝 Scripts Disponibles
+
+- `npm run dev` - Servidor de desarrollo
+- `npm run build` - Construir para producción
+- `npm run start` - Iniciar servidor de producción
+- `npm run lint` - Ejecutar linter
+- `npm run kill` - Cerrar puerto 3000
+
+## 🔒 Seguridad
+
+- Variables de entorno en `.env.local` (no se sube a Git)
+- Validación de datos con Zod
+- Sanitización de nombres de archivo
+- Headers de seguridad en respuestas
+
+## 📱 Redes Sociales
+
+- **Facebook**: https://www.facebook.com/people/Vanguard-Kids-Academy/61577858960786/
+- **Instagram**: https://www.instagram.com/vanguard_kids_academy/
+
+## 📄 Licencia
+
+Proyecto privado de Vanguard Kids.
+
+## 👥 Contacto
+
+Para más información, contactar a través del formulario en el sitio web.
+
+---
+
+**Última actualización**: Enero 2025
