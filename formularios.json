@@ -1,0 +1,18 @@
+{
+  "contact": {
+    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "subject": "📧 New Contact Form Submission",
+    "replyTo": true
+  },
+  "apply": {
+    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "subject": "💼 New Job Application",
+    "replyTo": true
+  },
+  "chat": {
+    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "subject": "💬 New Chat Message",
+    "replyTo": true
+  }
+}
+
