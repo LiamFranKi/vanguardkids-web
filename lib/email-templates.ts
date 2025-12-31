@@ -1,5 +1,24 @@
+import fs from 'fs'
+import path from 'path'
+
+// Function to get logo as base64
+function getLogoBase64(): string {
+  try {
+    const logoPath = path.join(process.cwd(), 'public', 'logo.png')
+    if (fs.existsSync(logoPath)) {
+      const logoBuffer = fs.readFileSync(logoPath)
+      const logoBase64 = logoBuffer.toString('base64')
+      return `data:image/png;base64,${logoBase64}`
+    }
+  } catch (error) {
+    console.error('Error reading logo file:', error)
+  }
+  // Fallback to URL if file not found
+  return `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vanguardkids.com'}/logo.png`
+}
+
 export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any): string {
-  const logoUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vanguardkids.com'}/logo.png`
+  const logoUrl = getLogoBase64()
   
   if (type === 'contact') {
     return `
@@ -479,7 +498,7 @@ export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any):
 }
 
 export function getThankYouEmailTemplate(type: 'contact' | 'apply', name: string): string {
-  const logoUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vanguardkids.com'}/logo.png`
+  const logoUrl = getLogoBase64()
   
   if (type === 'contact') {
     return `
