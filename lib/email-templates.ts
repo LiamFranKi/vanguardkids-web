@@ -1,9 +1,31 @@
 import fs from 'fs'
 import path from 'path'
 
-// Function to get logo as base64
+// Function to get logo URL or base64 (hybrid approach for maximum compatibility)
+function getLogoUrl(): string {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://72.60.172.101:3001'
+  const publicUrl = `${siteUrl}/logo.png`
+  
+  // Gmail and many email clients block images from:
+  // 1. HTTP URLs (require HTTPS)
+  // 2. IP addresses (require domain names)
+  // So we use base64 as fallback for better compatibility
+  const isSecureUrl = siteUrl.startsWith('https://')
+  const isDomainUrl = !/^\d+\.\d+\.\d+\.\d+/.test(siteUrl.replace(/^https?:\/\//, '').split(':')[0])
+  
+  // If URL is not secure or is an IP, use base64 instead
+  if (!isSecureUrl || !isDomainUrl) {
+    console.log(`Using base64 logo (URL not secure or is IP): ${publicUrl}`)
+    return getLogoBase64()
+  }
+  
+  // For HTTPS domains, use public URL (better for email clients)
+  console.log(`Using public URL for logo: ${publicUrl}`)
+  return publicUrl
+}
+
+// Function to get logo as base64 (fallback for HTTP/IP addresses)
 function getLogoBase64(): string {
-  // Try multiple possible paths
   const possiblePaths = [
     path.join(process.cwd(), 'public', 'logo.png'),
     path.join(process.cwd(), 'logo.png'),
@@ -25,10 +47,8 @@ function getLogoBase64(): string {
           console.warn(`Logo base64 encoding seems invalid: ${logoPath}`)
           continue
         }
-        console.log(`Logo loaded successfully from: ${logoPath} (${logoBuffer.length} bytes, base64 length: ${logoBase64.length})`)
+        console.log(`Logo loaded as base64 from: ${logoPath} (${logoBuffer.length} bytes)`)
         return `data:image/png;base64,${logoBase64}`
-      } else {
-        console.log(`Logo file not found at: ${logoPath}`)
       }
     } catch (error) {
       console.error(`Error reading logo from ${logoPath}:`, error)
@@ -36,18 +56,15 @@ function getLogoBase64(): string {
     }
   }
   
-  // If all paths failed, log warning and try URL fallback
-  console.warn('Logo file not found in any of the expected paths. Attempted paths:', possiblePaths)
-  
-  // Try to use URL fallback (with IP if domain not configured)
+  // Final fallback: return public URL even if not ideal
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://72.60.172.101:3001'
   const fallbackUrl = `${siteUrl}/logo.png`
-  console.log(`Using URL fallback for logo: ${fallbackUrl}`)
+  console.warn('Logo file not found. Using public URL as final fallback:', fallbackUrl)
   return fallbackUrl
 }
 
 export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any): string {
-  const logoUrl = getLogoBase64()
+  const logoUrl = getLogoUrl()
   
   if (type === 'contact') {
     return `
@@ -527,7 +544,7 @@ export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any):
 }
 
 export function getThankYouEmailTemplate(type: 'contact' | 'apply', name: string): string {
-  const logoUrl = getLogoBase64()
+  const logoUrl = getLogoUrl()
   
   if (type === 'contact') {
     return `
