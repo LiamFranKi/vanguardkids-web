@@ -3,18 +3,47 @@ import path from 'path'
 
 // Function to get logo as base64
 function getLogoBase64(): string {
-  try {
-    const logoPath = path.join(process.cwd(), 'public', 'logo.png')
-    if (fs.existsSync(logoPath)) {
-      const logoBuffer = fs.readFileSync(logoPath)
-      const logoBase64 = logoBuffer.toString('base64')
-      return `data:image/png;base64,${logoBase64}`
+  // Try multiple possible paths
+  const possiblePaths = [
+    path.join(process.cwd(), 'public', 'logo.png'),
+    path.join(process.cwd(), 'logo.png'),
+    path.join(__dirname, '..', 'public', 'logo.png'),
+    path.join(__dirname, '..', '..', 'public', 'logo.png'),
+    '/var/www/web-vanguardkids/public/logo.png',
+  ]
+  
+  for (const logoPath of possiblePaths) {
+    try {
+      if (fs.existsSync(logoPath)) {
+        const logoBuffer = fs.readFileSync(logoPath)
+        if (logoBuffer.length === 0) {
+          console.warn(`Logo file exists but is empty: ${logoPath}`)
+          continue
+        }
+        const logoBase64 = logoBuffer.toString('base64')
+        if (!logoBase64 || logoBase64.length < 100) {
+          console.warn(`Logo base64 encoding seems invalid: ${logoPath}`)
+          continue
+        }
+        console.log(`Logo loaded successfully from: ${logoPath} (${logoBuffer.length} bytes, base64 length: ${logoBase64.length})`)
+        return `data:image/png;base64,${logoBase64}`
+      } else {
+        console.log(`Logo file not found at: ${logoPath}`)
+      }
+    } catch (error) {
+      console.error(`Error reading logo from ${logoPath}:`, error)
+      continue
     }
-  } catch (error) {
-    console.error('Error reading logo file:', error)
   }
-  // Fallback to URL if file not found
-  return `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vanguardkids.com'}/logo.png`
+  
+  // If all paths failed, log warning and try URL fallback
+  console.warn('Logo file not found in any of the expected paths. Attempted paths:', possiblePaths)
+  
+  // Try to use URL fallback (with IP if domain not configured)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://72.60.172.101:3001'
+  const fallbackUrl = `${siteUrl}/logo.png`
+  console.log(`Using URL fallback for logo: ${fallbackUrl}`)
+  return fallbackUrl
 }
 
 export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any): string {
