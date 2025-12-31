@@ -318,6 +318,31 @@ export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any):
 </html>
     `
   } else if (type === 'chat') {
+    // Format phone for WhatsApp
+    const formatPhoneForWhatsApp = (phone: string): string => {
+      if (!phone) return '';
+      // Remove all non-digit characters
+      const cleanPhone = phone.replace(/\D/g, '');
+      // If phone has 10 digits, assume USA (+1)
+      if (cleanPhone.length === 10) {
+        return `1${cleanPhone}`;
+      }
+      // If it starts with 1 and has 11 digits, use as is
+      if (cleanPhone.startsWith('1') && cleanPhone.length === 11) {
+        return cleanPhone;
+      }
+      // If it has country code already (starts with other numbers), use as is
+      if (cleanPhone.length > 10) {
+        return cleanPhone;
+      }
+      // Otherwise return cleaned phone
+      return cleanPhone;
+    }
+    
+    const phoneNumber = data.phone ? formatPhoneForWhatsApp(data.phone) : '';
+    const whatsappMessage = `Hello ${data.name || ''}, thank you for contacting Vanguard Kids. How can we help you?`;
+    const whatsappUrl = phoneNumber ? `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}` : '';
+    
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -413,10 +438,10 @@ export function getEmailTemplate(type: 'contact' | 'apply' | 'chat', data: any):
                       </a>
                     </td>
                   </tr>
-                  ${data.phone ? `
+                  ${phoneNumber ? `
                   <tr>
                     <td align="center">
-                      <a href="https://wa.me/${data.phone.replace(/\D/g, '')}?text=Hello%20${encodeURIComponent(data.name || '')}%2C%20thank%20you%20for%20contacting%20Vanguard%20Kids.%20How%20can%20we%20help%20you%3F" style="display: inline-block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3); transition: all 0.3s ease;">
+                      <a href="${whatsappUrl}" style="display: inline-block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3); transition: all 0.3s ease;">
                         💬 Reply by WhatsApp
                       </a>
                     </td>
