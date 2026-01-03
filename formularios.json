@@ -1,16 +1,16 @@
 {
   "contact": {
-    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "to": ["dianavi54@gmail.com"],
     "subject": "📧 New Contact Form Submission",
     "replyTo": true
   },
   "apply": {
-    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "to": ["dianavi54@gmail.com"],
     "subject": "💼 New Job Application",
     "replyTo": true
   },
   "chat": {
-    "to": ["walter.lozano@vanguardschools.edu.pe"],
+    "to": ["dianavi54@gmail.com"],
     "subject": "💬 New Chat Message",
     "replyTo": true
   }
