@@ -114,7 +114,7 @@ export default function AboutUs() {
                 <FaClock className="text-pastel-blue mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-gray-800">Hours</p>
-                  <p className="text-gray-600">Monday - Friday: 7:00 AM - 6:00 PM</p>
+                  <p className="text-gray-600">Monday - Friday: 6:30 AM - 6:00 PM</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -187,7 +187,7 @@ export default function AboutUs() {
                 <FaClock className="text-pastel-blue mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-gray-800">Hours</p>
-                  <p className="text-gray-600">Monday - Friday: 7:00 AM - 6:00 PM</p>
+                  <p className="text-gray-600">Monday - Friday: 6:00 AM - 6:00 PM</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
