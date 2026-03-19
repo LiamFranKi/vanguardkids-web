@@ -19,3 +19,4 @@
 2. Para el logo, necesitarás actualizar `components/Header.tsx` (ver INSTRUCCIONES_LOGO_FAVICON.md)
 
 
+

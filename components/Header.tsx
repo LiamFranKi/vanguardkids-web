@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { FaBars, FaTimes, FaHome, FaInfoCircle, FaBriefcase, FaGraduationCap, FaFileAlt, FaEnvelope } from 'react-icons/fa'
+import { FaBars, FaTimes, FaHome, FaInfoCircle, FaBriefcase, FaGraduationCap, FaFileAlt, FaEnvelope, FaStreetView } from 'react-icons/fa'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,6 +22,7 @@ export default function Header() {
   const navItems = [
     { href: '/', label: 'Home', icon: FaHome },
     { href: '/aboutus', label: 'About Us', icon: FaInfoCircle },
+    { href: '/virtual-tour', label: 'Virtual Tour', icon: FaStreetView },
     { href: '/work-with-us', label: 'Work with Us', icon: FaBriefcase },
     { href: '/teacher-training', label: 'Teacher Training', icon: FaGraduationCap },
     { href: '/forms', label: 'Forms', icon: FaFileAlt },

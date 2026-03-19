@@ -89,3 +89,4 @@ npm run dev
 3. Verifica que no haya errores en la consola del navegador
 
 
+

@@ -81,3 +81,4 @@ export const metadata: Metadata = {
 Dado que el color predominante del sitio es ahora **celeste pastel (azul)**, asegúrate de que tu logo se vea bien con estos colores de fondo.
 
 
+
