@@ -6,7 +6,9 @@ export const metadata = {
 }
 
 const CLOUDPANO_TOUR_ID = 'Z-MLJYAhe'
+const CLOUDPANO_TOUR_ID_2 = 'DbQ7g1FoFvMY'
 const TOUR_URL = `https://app.cloudpano.com/tours/${CLOUDPANO_TOUR_ID}`
+const TOUR_URL_2 = `https://app.cloudpano.com/tours/${CLOUDPANO_TOUR_ID_2}`
 
 export default function VirtualTourPage() {
   return (
@@ -37,6 +39,17 @@ export default function VirtualTourPage() {
               frameBorder="0"
               className="w-full h-full min-h-[500px]"
               title="Vanguard Kids Virtual Tour"
+            />
+          </div>
+
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-gray-100 w-full aspect-video min-h-[500px] mt-12">
+            <iframe
+              src={TOUR_URL_2}
+              allow="accelerometer; gyroscope; fullscreen"
+              allowFullScreen
+              frameBorder="0"
+              className="w-full h-full min-h-[500px]"
+              title="Vanguard Kids Virtual Tour 2"
             />
           </div>
           <p className="text-center text-gray-500 mt-6 text-sm">
